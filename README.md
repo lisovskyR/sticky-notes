@@ -1,7 +1,7 @@
 # Sticky notes app #
 ## Draggable and resizable sticky notes ##
 
-<img src="./readme.png" width="600" />
+<img src="./readme.png" width="600"/>
 
 ### Building ###
 
