@@ -3,7 +3,7 @@ import {stylesheet, classes} from "typestyle";
 import {
 	STICKER_CONTENT_CHANGE,
 	STICKER_DELETE,
-	STICKER_REORDER_TO_TOP,
+	STICKER_REORDER_TO_TOP, STICKER_SAVE_LOCAL,
 	STICKER_TITLE_CHANGE,
 	StickerType
 } from "store/Board/types";
@@ -156,6 +156,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
 			dispatch({type: STICKER_CONTENT_CHANGE, id, content}),
 		deleteSticker: (id: string) => dispatch({type: STICKER_DELETE, id}),
 		stickerReorderToTop: (id: string) => dispatch({type: STICKER_REORDER_TO_TOP, id}),
+		saveLocal: () => dispatch({type: STICKER_SAVE_LOCAL}),
 	}
 }
 

@@ -22,9 +22,9 @@ interface IBoardProps {
 	stickers: ImmutableArray<StickerType>,
 	updateStickerPosition: (id: string, position: StickerPositionType) => void,
 	newSticker: () => void,
-	saveLocal: (stickers: StickerType[]) => void,
+	saveLocal: () => void,
 	loadLocal: () => void,
-	saveServer: (stickers: StickerType[]) => void,
+	saveServer: () => void,
 	loadServer: () => void,
 	isPendingRequest: boolean,
 }
@@ -162,11 +162,11 @@ class Board extends React.Component<IBoardProps> {
 	}
 
 	private saveLocal() {
-		this.props.saveLocal(this.props.stickers.asMutable({deep: true}));
+		this.props.saveLocal();
 	}
 
 	private saveServerClick() {
-		this.props.saveServer(this.props.stickers.asMutable({deep: true}));
+		this.props.saveServer();
 	}
 
 	private loadServerClick() {
@@ -186,7 +186,6 @@ class Board extends React.Component<IBoardProps> {
 						data={sticker}
 						onDragStart={(e) => this.onItemDragStart(e, sticker.id)}
 						onMouseDown={(e) => this.onItemMouseDown(e, sticker.id)}
-						saveLocal={() => this.saveLocal}
 					/>
 				))}
 				<div className={styles.topButtons}>
@@ -215,9 +214,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
 		updateStickerPosition: (id: string, position: StickerPositionType) =>
 			dispatch({type: STICKER_UPDATE_POSITION, id, position}),
 		newSticker: () => dispatch({type: STICKER_NEW}),
-		saveLocal: (stickers: StickerType[]) => dispatch({type: STICKER_SAVE_LOCAL, stickers}),
+		saveLocal: () => dispatch({type: STICKER_SAVE_LOCAL}),
 		loadLocal: () => dispatch({type: STICKER_LOAD_LOCAL}),
-		saveServer: (stickers: StickerType[]) => dispatch({type: STICKER_SAVE_SERVER_START, stickers}),
+		saveServer: () => dispatch({type: STICKER_SAVE_SERVER_START}),
 		loadServer: () => dispatch({type: STICKER_LOAD_SERVER_START}),
 	}
 }

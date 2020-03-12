@@ -9,14 +9,16 @@ import {
     StickerSaveServerStartAction,
     StickerType,
 } from "./types"
-import {takeLatest, call, put, all} from "redux-saga/effects";
+import {takeLatest, call, put, all, select} from "redux-saga/effects";
 import {LOCAL_STORAGE_STICKERS_KEY} from "utils/const";
 import {serverMock} from "utils/serverMock";
+import {getStickers} from "./reducer";
 
 /* WORKERS */
 
 function* saveLocal(action: StickerSaveLocalAction) {
-    window.localStorage.setItem(LOCAL_STORAGE_STICKERS_KEY, JSON.stringify(action.stickers));
+    const stickers = yield select(getStickers);
+    window.localStorage.setItem(LOCAL_STORAGE_STICKERS_KEY, JSON.stringify(stickers.asMutable({deep: true})));
 }
 
 function* loadServer(action: StickerLoadServerStartAction) {
@@ -30,8 +32,9 @@ function* loadServer(action: StickerLoadServerStartAction) {
 }
 
 function* saveServer(action: StickerSaveServerStartAction) {
+    const stickers = yield select(getStickers);
     const response = yield call(() => {
-        return serverMock.saveRequest(JSON.stringify(action.stickers));
+        return serverMock.saveRequest(JSON.stringify(stickers.asMutable({deep: true})));
     });
     if (response.status === 200) {
         yield put({type: STICKER_SAVE_SERVER_END});
