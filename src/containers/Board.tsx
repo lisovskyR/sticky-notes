@@ -149,11 +149,13 @@ class Board extends React.Component<IBoardProps> {
 	}
 
 	private onMouseUp(event: React.MouseEvent) {
-		this.setState({
-			stickerDragging: null,
-			stickerResizing: null,
-		});
-		this.saveLocal();
+		if (this.state.stickerDragging || this.state.stickerResizing) {
+			this.setState({
+				stickerDragging: null,
+				stickerResizing: null,
+			});
+			this.saveLocal();
+		}
 	}
 
 	private newStickerClick() {

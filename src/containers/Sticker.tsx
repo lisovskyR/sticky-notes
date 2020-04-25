@@ -58,9 +58,12 @@ class Sticker extends React.Component<ISticker> {
 
 	private onMouseMove(e: React.MouseEvent) {
 		const target = e.target as HTMLElement;
-		this.setState({
-			angleCollision: getAngleCollision(e.clientX, e.clientY, target.getBoundingClientRect())
-		});
+		const angleCollision = getAngleCollision(e.clientX, e.clientY, target.getBoundingClientRect());
+		if (angleCollision !== this.state.angleCollision) {
+			this.setState({
+				angleCollision,
+			});
+		}
 	}
 
 	private get resizeCursorStyle() {
